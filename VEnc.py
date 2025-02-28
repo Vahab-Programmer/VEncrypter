@@ -19,7 +19,7 @@ class VEncrypter:
         return __key
     @staticmethod
     def __make_name(filepath:str)->str:return join(dirname(filepath),"".join(choices(ascii_letters,k=randint(1,64)))+".tmp")
-    def get_key(self)->dict:return {"key":self.__key,"salt":self.__salt}
+    def get_key(self)->dict:return {"key":self.__key,"salt":self.__orgsalt}
     def encrypt(self,data:bytes)->bytes:
         res=bytes()
         if not data: return data
