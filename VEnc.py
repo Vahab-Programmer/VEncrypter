@@ -29,7 +29,6 @@ class VEncrypter:
         res=bytes()
         if not data: return data
         for i,sd in enumerate(data):
-            print(i)
             res += ((sd+self.__key[i%len(self.__key)]+256+i+(res[-1 if i == 0 else i-1] if len(res)>0 else 0))%256).to_bytes()
         res.replace(res[0].to_bytes(),((res[0]+res[-1])%256).to_bytes())
         return res
