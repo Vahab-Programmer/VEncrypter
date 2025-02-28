@@ -12,7 +12,7 @@ class VEncrypter:
         self.__orgsalt=salt
         self.__salt=self.__make_key(salt)
         self.__key=self.__make_key(key+self.__salt)
-        def update_salt(self,salt:bytes=None)->None:
+    def update_salt(self,salt:bytes=None)->None:
         if salt == None:salt=token_bytes(32)
         assert isinstance(salt,bytes)
         assert len(salt)==32
