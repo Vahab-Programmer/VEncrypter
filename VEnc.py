@@ -44,6 +44,7 @@ class VEncrypter:
         return res
     def encrypt_file(self,filepath,asu:bool=True) -> bool:
         if not exists(filepath):return False
+        if getsize(filepath)==0:return False
         source=open(filepath,"rb")
         dstname=self.__make_name(filepath)
         destination=open(dstname,"wb")
