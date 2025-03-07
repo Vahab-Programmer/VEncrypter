@@ -13,7 +13,7 @@ class VEncrypter:
         self.__salt=self.__make_key(salt)
         self.__key=self.__make_key(key+self.__salt)
     def update_salt(self,salt:bytes=None)->None:
-        if salt == None:salt=token_bytes(32)
+        if not salt:salt=token_bytes(32)
         assert isinstance(salt,bytes)
         assert len(salt)==32
         self.__orgsalt=salt
@@ -32,15 +32,15 @@ class VEncrypter:
         res=bytes()
         if not data: return data
         for i,sd in enumerate(data):
-            res += ((sd+self.__key[i%len(self.__key)]+256+i+(res[-1 if i == 0 else i-1] if len(res)>0 else 0))%256).to_bytes()
+            res += (((sd^self.__key[i%len(self.__key)])+256+i+(res[-1 if i == 0 else i-1] if len(res)>0 else 0))%256).to_bytes()
         res.replace(res[0].to_bytes(),((res[0]+res[-1])%256).to_bytes())
         return res
     def decrypt(self,data:bytes)->bytes:
         res = bytes()
         if not data:return data
-        data.replace(data[0].to_bytes(),((data[0]-data[-1])%256).to_bytes())
+        ((data[0]-data[-1])%256).to_bytes()
         for i, sd in enumerate(data):
-            res+=((sd-self.__key[i%len(self.__key)]+256-i-(data[-1 if i == 0 else i-1] if len(res)>0 else 0))%256).to_bytes()
+            res+=(((sd+256-i-(data[-1 if i == 0 else i-1] if len(res)>0 else 0))^self.__key[i%len(self.__key)])%256).to_bytes()
         return res
     def encrypt_file(self,filepath,asu:bool=True) -> bool:
         if not exists(filepath):return False
