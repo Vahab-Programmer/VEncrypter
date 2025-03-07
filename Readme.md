@@ -1,4 +1,4 @@
-#Simple Encrypter Decrypted
+#Simple Encrypter Decrypter
 
 I write A simple App with python3
 
