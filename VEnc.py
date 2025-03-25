@@ -4,6 +4,8 @@ from random import randint,choices
 from string import ascii_letters
 from secrets import token_bytes
 from os import rename,remove
+__author__="Vahab Programmer https://Github.com/Vahab-Programmer"
+__version__="0.0.1"
 class VEncrypter:
     def __init__(self,key:bytes,salt:bytes=token_bytes(32)):
         assert len(salt)==32
